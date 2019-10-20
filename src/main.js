@@ -1,6 +1,6 @@
 'use strict';
 
-const { nNumbers, processNumbers, validateConfiguration } = require('../utils/main');
+const { nNumbers, processNumbers, validateConfiguration } = require('./utils/main');
 
 /**
  * Main function to be called which generates the table.
