@@ -1,60 +1,82 @@
-/**
- * A utility function which checks if a number is prime or not.
- * @param {number} num - Number to be checked.
- * @returns {boolean} Is num prime or not.
- */
-function isPrime(num) {
-    for (let i = 2, j = Math.sqrt(num); i <= j; i++) {
-        if (num % i === 0) return false;
+'use strict';
+
+const { createInterface } = require('readline');
+const { generateTable } = require('./src/main');
+
+const rl = createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+const input = {
+    width: 0,
+    height: 0,
+    numberType: 'prime',
+    formulaType: 'add'
+};
+
+const questions = {
+    width() {
+        return new Promise((resolve, reject) => {
+            rl.question('Matrix width? ', answer => {
+                input.width = +answer;
+                resolve();
+            });
+        });
+    },
+    height() {
+        return new Promise((resolve, reject) => {
+            rl.question('Matrix height? ', answer => {
+                input.height = +answer;
+                resolve();
+            });
+        });
+    },
+    numberType() {
+        const mapper = {
+            '1': 'prime',
+            '2': 'fibonacci'
+        };
+        return new Promise((resolve, reject) => {
+            rl.question(
+                `Number type? Select a number:
+1) Prime
+2) Fibonacci
+`,
+                answer => {
+                    input.numberType = mapper[answer];
+                    resolve();
+                }
+            );
+        });
+    },
+    formulaType() {
+        const mapper = {
+            '1': 'add',
+            '2': 'add1Mul'
+        };
+        return new Promise((resolve, reject) => {
+            rl.question(
+                `Formula type? Select a number:
+1) (Xi + Xj)
+2) (Xi * (Xj +1))
+`,
+                answer => {
+                    input.formulaType = mapper[answer];
+                    resolve();
+                }
+            );
+        });
     }
+};
 
-    return num > 1;
-}
-
-/**
- * A utility function used to generate an array of first n prime numbers.
- * This function internally uses isPrime function to perform check is number is prime.
- * @param {number} n - Prime number to be generated.
- * @returns {array} An array of first n prime numbers.
- */
-function nPrimeNumbers(n) {
-    const array = [];
-    let num = 2;
-
-    while (array.length < n) {
-        if (isPrime(num)) array.push(num);
-
-        num++;
+const main = async () => {
+    for (let question in questions) {
+        await questions[question]();
     }
+    rl.close();
 
-    return array;
-}
+    console.log(generateTable(input));
+};
 
-/**
- * Main function to be called which generates the table.
- * @param {number} n - Used to generate a table of n*n. Defaulted to 0.
- * @returns {array} - A 2 dimentional array which represents a table of n*n.
- */
-function generateTable(n = 0) {
-    if (n < 1) return [];
-
-    const primes = nPrimeNumbers(n),
-        table = [];
-
-    for (let i = 0; i < n; i++) {
-        table.push([]);
-        for (let j = 0; j < n; j++) {
-            table[i][j] = primes[i] + primes[j];
-        }
-    }
-
-    return table;
-}
-
-// Performing some tests
-console.log(JSON.stringify(generateTable(-1), null, '\t'));
-console.log(JSON.stringify(generateTable(0), null, '\t'));
-console.log(JSON.stringify(generateTable(1), null, '\t'));
-console.log(JSON.stringify(generateTable(2), null, '\t'));
-console.log(JSON.stringify(generateTable(3), null, '\t'));
-console.log(JSON.stringify(generateTable(4), null, '\t'));
+main();
