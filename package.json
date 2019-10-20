@@ -1,0 +1,27 @@
+{
+	"name": "prime-sum-table-generator",
+	"version": "1.0.0",
+	"description": "A matrix generator which takes width, height, number type and formula type from user and returns the 2 dimentional matrix.",
+	"main": "index.js",
+	"scripts": {
+		"test": "jest",
+		"start": "node index.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/JalaySimaria/prime-sum-table-generator.git"
+	},
+	"keywords": [],
+	"author": {
+		"name": "Jalay Simaria",
+		"url": "http://jalay.in/"
+	},
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/JalaySimaria/prime-sum-table-generator/issues"
+	},
+	"homepage": "https://github.com/JalaySimaria/prime-sum-table-generator#readme",
+	"devDependencies": {
+		"jest": "^24.9.0"
+	}
+}
